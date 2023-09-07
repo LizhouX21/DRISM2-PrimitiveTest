@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import socket
 import struct
 import threading
@@ -11,7 +11,7 @@ from multiprocessing import Process, Queue, Value, SimpleQueue
 import select
 
 HOST ='10.0.0.1' # Symbolic name meaning all available interfaces
-
+#HOST ='192.168.206.28' 
 class UDPNode(Process):
     """
     UDP node

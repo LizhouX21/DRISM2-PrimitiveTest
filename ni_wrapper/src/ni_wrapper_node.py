@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # license removed for brevity
 import rospy
 from std_msgs.msg import String
@@ -14,11 +14,13 @@ class NIWrapper():
     def __init__(self):
         if rospy.has_param("~communication/IP"):
             self._ip = rospy.get_param("~communication/IP")
+            print(self._ip)
         else:
             raise Exception("No IP param")
 
         if rospy.has_param("~communication/port"):
             self._port = rospy.get_param("~communication/port")
+            print(self._port)
         else:
             raise Exception("No port param")
 

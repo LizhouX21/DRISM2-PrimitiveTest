@@ -16,6 +16,8 @@ Email: gpollayil@gmail.com, mathewjosepollayil@gmail.com, stefano.angeli@ing.uni
 #include "std_msgs/Float64.h"
 #include "std_msgs/Bool.h"
 #include "std_srvs/SetBool.h"
+#include <geometry_msgs/Pose.h>
+
 
 // MoveIt
 #include <moveit/robot_model_loader/robot_model_loader.h>
@@ -71,12 +73,35 @@ class TaskSequencer {
 
         bool OpenGripper(bool open);
 
+        void FirstPrimitive();
+
+        geometry_msgs::Pose Rotate_Axis_x(bool clockwise, geometry_msgs::Pose current_pose);
+
+        geometry_msgs::Pose Rotate_Axis_x_positive(geometry_msgs::Pose current_pose);
+
+        geometry_msgs::Pose Rotate_Axis_x_negative(geometry_msgs::Pose current_pose);
+
+        geometry_msgs::Pose Rotate_Axis_z(bool clockwise, geometry_msgs::Pose current_pose);
+
+
+        void SecondPrimitive_rotx();
+
+        void ThirdPrimitive_rotz();
+
+        bool Is_oppsite(int current_dice_upward,int target_dice_upward);
+
+        ros::Subscriber dice_sub;
+
+        geometry_msgs::PoseStamped dice_pose;
+
     /// private variables -------------------------------------------------------------------------
 	private:
         
         std_msgs::Bool gripper_close_open;
         //
 		ros::NodeHandle nh;
+
+        void call_pose(const geometry_msgs::PoseStamped&);
 
         // The Abb Client
         AbbClient abb_client;
@@ -114,5 +139,23 @@ class TaskSequencer {
         trajectory_msgs::JointTrajectory tmp_traj_arm;
         std::vector<double> null_joints; 
         std::vector<double> now_joints;   
-        std::vector<moveit::core::JointModel *> number_of_active_joints;                        // null joints in order to make joint plan from present joints     
+        std::vector<moveit::core::JointModel *> number_of_active_joints;   
+        
+        
+        // end effector                     // null joints in order to make joint plan from present joints
+
+        // set the end effector release pose
+        geometry_msgs::Pose release_dice_position_EE_high;   // high end effector
+        geometry_msgs::Pose release_dice_position_EE_low;   // low end effector to release the dice
+        geometry_msgs::Pose read_pose;
+        geometry_msgs::Pose grasp_pose_oriented_low;
+
+
+        double table_height ;
+
+        
+
+
+
+
 };
